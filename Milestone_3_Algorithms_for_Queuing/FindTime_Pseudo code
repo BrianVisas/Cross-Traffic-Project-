@@ -1,0 +1,17 @@
+
+
+
+FindTime ()
+ { 
+                   a =  ts ();  // calculating time spent: a
+                    b =  tg();  // calculating gap: b
+                      c = tp();// calculating time span: c
+           WHILE (a>b)  // no free time exist between adjacent node
+                {
+                          newNode = childNode (); // setting current node as the successor node
+                            IF (b<a)  d= ti (); // time exist between adjacent nodes
+                            ELSE e=th ();    // time does not exist between adjacent nodes                  
+                    }
+
+RETURN d // d is the amount of time we seek.
+}
