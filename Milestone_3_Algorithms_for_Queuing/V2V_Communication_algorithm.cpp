@@ -29,6 +29,6 @@ V2V_Communication()
 	else
 	{
 		printf("Data collection from sensors is not done successfully")
-		sensor_failure; //This funcion is called in case a failure to collect data from the sensors 
+		sensor_failure (); //This funcion is called in case a failure to collect data from the sensors 
 	}
 }
