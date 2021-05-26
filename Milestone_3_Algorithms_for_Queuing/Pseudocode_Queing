@@ -1,0 +1,45 @@
+Queing_Vehicles()
+
+       Calculate_Speed();   //   Calculating the speed between the cars
+       Comunication_Vehicle();  // Vehicle Check other vehicle distance
+       Direction_Vehicle();  // Checking vehicle direction to take
+       Clearance_Crossing();  // Vehicle is able to start the crossing
+
+	
+	If Decision = 0 { // Vehicle has to wait its turn
+		
+	Emergency tagging ()
+	Vehiculo Break; 
+	
+	}Else
+  
+       Calculate_Speed();   // sharing speed inf  
+       Comunication_Vehicle();  // Get Information of the other vehicle
+       Direction_Vehicle();  //  Assigning Potential direction to take
+       Clearance_Crossing();  // Vehicle get the inf to cross
+	
+	
+	If crossing = True {
+		
+		Crosses intersection
+		End;
+	}Else
+	 
+		if Cross_Again = True{  // Checking again the disponibility to cross
+			 
+       Calculate_Speed();    
+       Comunication_Vehicle();  
+       Direction_Vehicle();    
+       Clearance_Crossing();
+			If crossing = True {
+         
+		
+			Crosses intersection
+			End;
+			}
+		}Else	
+			Break (2 minutes);
+			
+			Crosses intersection
+			End;	
+}
