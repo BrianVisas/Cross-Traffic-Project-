@@ -8,8 +8,8 @@ Queing_Vehicles()
 	
 	If Decision = 0 { // Vehicle has to wait its turn
 		
-	Emergency tagging ()
-	Vehiculo Break; 
+	Emergency tagging () // tagging incoming vehicle
+	Vehicle Break; 
 	
 	}Else
   
@@ -19,18 +19,18 @@ Queing_Vehicles()
        Clearance_Crossing();  // Vehicle get the inf to cross
 	
 	
-	If crossing = True {
+	If crossing = True { // ready to cross and get to acceleration zone
 		
-		Crosses intersection
+		Crosses intersection 
 		End;
 	}Else
 	 
 		if Cross_Again = True{  // Checking again the disponibility to cross
 			 
-       Calculate_Speed();    
-       Comunication_Vehicle();  
-       Direction_Vehicle();    
-       Clearance_Crossing();
+                   Calculate_Speed();    
+                   Comunication_Vehicle();  
+                   Direction_Vehicle();    
+                   Clearance_Crossing();
 			If crossing = True {
          
 		
@@ -38,7 +38,7 @@ Queing_Vehicles()
 			End;
 			}
 		}Else	
-			Break (2 minutes);
+			Break (2 minutes); // wait 2 minutes the vehicle
 			
 			Crosses intersection
 			End;	
