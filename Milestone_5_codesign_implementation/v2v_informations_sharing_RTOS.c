@@ -8,7 +8,7 @@ QueueHandle_t qh = 0;
 
 TaskHandle_t mytaskhendler = NULL;
 TaskHandle_t mytaskhendler1 = NULL;
-void mytask1(void* P)
+void collect(void* P)
 {
     
     while (1)
@@ -91,7 +91,7 @@ int main_blinky()
 {
     int pass = 50;
     qh = xQueueCreate(1, sizeof(int));
-    xTaskCreate(mytask1, "task1", 200, (void*)pass, 1, &mytaskhendler);
+    xTaskCreate(collect, "collect", 200, (void*)pass, 1, &mytaskhendler);
     xTaskCreate(task_tx, (signed char*)"t1", 1024, 0, 1, 0);
     xTaskCreate(task_rx, (signed char*)"t2", 1024, 0, 1, 0);
     xTaskCreate(task_tx_b, (signed char*)"t1", 1024, 0, 1, 0);
