@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <conio.h>
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+QueueHandle_t qh = 0;
+
+TaskHandle_t mytaskhendler = NULL;
+TaskHandle_t mytaskhendler1 = NULL;
+void mytask1(void* P)
+{
+
+    while (1)
+    {
+
+        printf("Information collected from the car sucessfully\r\n");
+        vTaskDelay(300);
+
+        vTaskDelete(mytaskhendler);
+    }
+    fflush(stdout);
+}
+
+void task_lx(void* p)
+{
+    int myInt = 2;
+    while (1)
+    {
+        myInt++;
+        if (!xQueueSend(qh, &myInt, 500)) {
+            puts("Position no received");
+            
+        }
+        else {
+            printf("Send Position of the car: %u\n", myInt);
+        }
+        vTaskDelay(1000);
+        vTaskDelete(qh);
+    }
+}
+
+void task_qx(void* p)
+{
+    int myInt = 0;
+    while (1)
+    {
+       
+        
+        if (!xQueueReceive(qh, &myInt, 1000)) {
+            puts("Position not received ");
+        }
+        else {
+            printf("Received Position of the car: %u\n", myInt);
+
+        }
+        
+    }
+    vTaskDelete(qh);
+    
+}
+
+int main_blinky()
+{
+    int pass = 50;
+    qh = xQueueCreate(1, sizeof(int));
+    xTaskCreate(mytask1, "task1", 200, (void*)pass, 1, &mytaskhendler);
+    xTaskCreate(task_lx, (signed char*)"t1", 1024, 0, 1, 0);
+    xTaskCreate(task_qx, (signed char*)"t2", 1024, 0, 1, 0);
+    vTaskStartScheduler();
+
+    return -1;
