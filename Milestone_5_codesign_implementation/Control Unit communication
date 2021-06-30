@@ -1,0 +1,132 @@
+
+luis cabezas <luisdavidcab9@gmail.com>
+10:59 (hace 2 minutos)
+
+para mí
+
+#include <stdio.h>
+#include <conio.h>
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+QueueHandle_t qh = 0;
+TaskHandle_t mytaskhendler = NULL;
+TaskHandle_t mytaskhendler_1 = NULL;
+TaskHandle_t mytaskhendler_2 = NULL;
+TaskHandle_t mytaskhendler_3 = NULL;
+TaskHandle_t mytaskhendler_4 = NULL;
+
+
+
+void mytask1(void*p)
+{
+    while (1) {
+        int s= 0;
+        printf ("Interface Connected Succesfully\n",s ++);
+        vTaskDelay(1000);
+      if (s==1)
+        vTaskDelete(mytaskhendler_2);
+        
+}
+    
+}
+
+
+void Sending_inf(void* P)
+{
+    int count = 0 ;
+        while(1){
+        printf("Sensors Sending Information: %d\r\n", count ++); // counting and sending the inf
+        if (! xQueueSend(qh, &count, 1000)) {
+
+            printf("Information not Received\n");
+        }
+        vTaskDelay(3000); // second delay
+      
+
+     
+      
+    }
+    
+}
+
+void Receiving_inf(void* P)
+{
+    int i = 0;
+    while (1) {
+
+        if (!xQueueReceive(qh, &i, 1000)) { // receiving the inf from the sensors and connecting them
+
+            printf("Receiving Information to the Control Unit \n");
+        }
+        else{
+            puts("Information Failed to Receive\n");
+
+        }
+
+    }
+
+}
+
+void control_comu(void* p)
+{
+    int t = 0;
+
+    while (1) {
+
+        printf("Connecting with Comunication Module: %d\r\n", t++); // counting and sending the 
+        if (!xQueueSend(qh, &t, 2000)) {
+            
+            puts("Comunication Lost\n");
+            
+        }
+       vTaskDelay(3000); // second delay
+
+
+    }
+    {
+
+    }
+
+}
+void Module_Vehicle(void* P)
+{
+    int x = 0;
+    while (1) {
+
+        if (!xQueueReceive(qh, &x,3000)) { // receiving the inf from the sensors and connecting them
+
+            printf("Comunicating With the Vehicle \n");
+        }
+        else {
+            puts("No Comunication Found it\n");
+
+           
+
+        }
+
+    }
+
+}
+
+
+
+
+
+    
+
+
+int main_blinky()
+{
+  
+    qh = xQueueCreate(5, sizeof(int));
+    xTaskCreate(Sending_inf, "task2", 200, (void*)0, 1, &mytaskhendler);
+    xTaskCreate(Receiving_inf, "task3", 200, (void*)0, 1, &mytaskhendler_1);
+    xTaskCreate(mytask1, "task1", 200, (void*)0, 4, &mytaskhendler_2);
+    xTaskCreate(control_comu, "task4", 200, (void*)0, 1, &mytaskhendler_3);
+    xTaskCreate(Module_Vehicle, "task5", 200, (void*)0, 1, &mytaskhendler_3);
+     vTaskStartScheduler();
+
+    return -1;
+}
