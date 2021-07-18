@@ -46,6 +46,5 @@ V2V_Information_sharing()
 	   		printf("Information  is  not received successfully")
 	   }
 	}
-return 0;	
-}
+	}
 
