@@ -9,17 +9,15 @@ V2V_Information_sharing()
 		printf("Data collection from vehicle B is  done successfully ")
 		send_info_CU_Cloud(); //Vehicle B send information to the cloud based controll unit 
 		printf("Information  is sent successfully")
-		
 		}
 		else
 		 {
 			printf("Information  is not sent successfully")
 			run_diagnostic() // in case  the information  is not sent successfully on board main controller run a diagnoses
 		}
-		
-		
 		verify_info(); //after the information is received by cloud based control unit it is verified and processed.
-	   
+		
+		
 		if(verificatio=true) // true: verification and procession is done successfully 
 		{
 			printf("Information  is ready for broadcasting")
@@ -29,11 +27,8 @@ V2V_Information_sharing()
 		else 
 		{
 			printf("Information  is not sent successfully")
-			
-			
 			process_info_again(); // Information is not validated and is still in processing phase 
-		    
-	   }
+		    }
 	   
 	   if(information_received_Vehicle_A=true)// true:The informatin is reveibed successfully by vehicle A
 	   {
