@@ -1,0 +1,209 @@
+// v2v2 simul 
+
+#include <stdio.h>
+#include <conio.h>
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+xQueueHandle queue_handle = NULL;
+
+ 
+
+void tx(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+        
+        printf("Professor Henckler: Good Morning Achim \n");
+        long Anguiga = xQueueSend(queue_handle, &item, 2000);
+        puts( " \n" );
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+
+void tx1(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+        
+        printf("Professor Rettberg: Good Morning Professor Stefan \n");
+        long Hermann = xQueueSend(queue_handle, &item, 2000);
+        puts( "\n " );
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+void tx2(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+         
+        printf("Professor Henckler: What happened, last season, to our football team: the SC Paderborn football club. Did they get promoted to the Bundesliga? \n");
+
+        long Hermann = xQueueSend(queue_handle, &item, 2000);
+        puts("\n ");
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+
+void tx3(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+
+        printf("Professor Rettberg: Not, they were not promoted to the top level \n");
+        long Anguiga = xQueueSend(queue_handle, &item, 3000);
+        puts("\n");
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+void tx4(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+
+        printf("Professor Henckler: And DIE MANNSCHAFT, what happenned to them during the UEFA European Football Championship ? \n");
+        long Anguiga = xQueueSend(queue_handle, &item, 3000);
+        puts("");
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+
+
+
+void tx5(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+
+        printf("Professor Rettberg: In case you missed it. The Squadra Azzurra is currently the best football team in Europe \n ");
+        long Anguiga = xQueueSend(queue_handle, &item, 3000);
+        puts("");
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+void tx6(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+
+        printf("Professor Henckler: No way! \n ");
+        long Anguiga = xQueueSend(queue_handle, &item, 1000);
+        puts("");
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+
+void tx7(void* p)
+
+{
+
+    int item = 0;
+    while (1) {
+
+        printf("Professor Rettberg: True...hummmm, this is cruel,huuuuuuuuummmmmmmmmmmmmmmmm \n");
+        printf("Professor Rettberg: by the way, do you know Giuseppe and Lucas Brodo....? \n");
+        printf("To be continued.... \n");
+        long Anguiga = xQueueSend(queue_handle, &item, 3000);
+        puts("");
+
+        vTaskDelay(4000);
+
+    }
+
+}
+
+
+
+
+
+
+void rx(void *p)
+
+{
+
+    int item = 0;
+    while (1) {
+       
+        if (xQueueReceive(queue_handle, &item, 3000))
+
+        {
+            printf(" ", item);
+
+        }
+
+    }
+
+
+ }
+
+
+
+        int main_blinky()
+        {
+
+        
+
+            setvbuf(stdout, 0, _IONBF, 0);
+            setvbuf(stdin, 0, _IONBF, 0);
+            queue_handle = xQueueCreate(10, sizeof(int));
+            xTaskCreate(tx,  (signed char*)"tx", 1024, 0, 1, 0);
+            xTaskCreate(tx1, (signed char*)"tx1", 1024, 1, 1, 0);
+            xTaskCreate(tx2, (signed char*)"tx2", 1024, 1, 1, 0);
+            xTaskCreate(tx3, (signed char*)"tx3", 1024, 1, 1, 0);
+            xTaskCreate(tx4, (signed char*)"tx4", 1024, 1, 1, 0);
+            xTaskCreate(tx5, (signed char*)"tx5", 1024, 1, 1, 0);
+            xTaskCreate(tx6, (signed char*)"tx6", 1024, 1, 1, 0);
+            xTaskCreate(tx7, (signed char*)"tx7", 1024, 1, 1, 0);
+            xTaskCreate(rx,  (signed char*)"rx", 1024, 0, 2, 0);
+           
+            
+            vTaskStartScheduler();
+
+            fflush(stdout);
+
+            return 0;
+        }
+  
